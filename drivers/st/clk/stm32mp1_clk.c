@@ -1441,7 +1441,8 @@ static void stm32mp1_hse_enable(bool bypass, bool digbyp, bool css)
 	}
 
 	if (bypass || digbyp) {
-		mmio_write_32(rcc_base + RCC_OCENSETR, RCC_OCENR_HSEBYP);
+		//mmio_write_32(rcc_base + RCC_OCENSETR, RCC_OCENR_HSEBYP); //ST
+		mmio_write_32(rcc_base + RCC_OCENCLRR, RCC_OCENR_HSEBYP); //ya157c
 	}
 
 	stm32mp1_hs_ocs_set(true, RCC_OCENR_HSEON);
