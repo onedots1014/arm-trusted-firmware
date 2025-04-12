@@ -45,22 +45,27 @@ host_tools:
 	@$(MAKE) --no-print-directory -C $(LOCAL_PATH)/tools/stm32image
 
 tf: host_tools
+	echo "TF_A_CONFIG values: $(TF_A_CONFIG)"
 	for config in $(TF_A_CONFIG) ; do \
+		echo "Current config: $$config" ; \
 		# Init any extraoemake \
 		add_extraoemake= ; \
 		for fullconfig in $(TF_A_CONFIG_OEMAKE) ; do \
 			extraconfig=$$(echo $$fullconfig | cut -d',' -f1) ; \
 			if [ "$$extraconfig" = "$$config" ]; then \
 				add_extraoemake=$$(echo $$fullconfig | cut -d',' -f2) ; \
+				echo "Additional OEMAKE for $$config: $$add_extraoemake" ; \
 			fi ; \
 		done ; \
 		mkdir -p $(LOCAL_PATH)/build/$$config ; \
 		if test -n "$(TFA_DEVICETREE)" ; then \
 			for dt in $(TFA_DEVICETREE) ; do \
-				if [ "$(TF_A_CONFIG)" != "serialboot" ]; then \
+				echo "Processing dt: $$dt with config: $$config" ; \
+				if [ "$$config" != "serialboot" ]; then \
+					echo "Using EXTRA_OEMAKE for config: $$config" ; \
 					$(MAKE) $(EXTRA_OEMAKE) -C $(LOCAL_PATH) DTB_FILE_NAME=$$dt.dtb BUILD_PLAT=$(LOCAL_PATH)/build/$$config $$add_extraoemake ; \
 				else \
-					$(MAKE) $(EXTRA_OEMAKE_SERIAL) -C $(LOCAL_PATH) DTB_FILE_NAME=$$dt.dtb BUILD_PLAT=$(LOCAL_PATH)/build/$$config $$add_extraoemake ; \
+					$(MAKE) $(EXTRA_OEMAKE)  $(EXTRA_OEMAKE_SERIAL) -C $(LOCAL_PATH) DTB_FILE_NAME=$$dt.dtb BUILD_PLAT=$(LOCAL_PATH)/build/$$config $$add_extraoemake ; \
 				fi \
 				# Copy binary file with explicit name \
 				cp -f $(LOCAL_PATH)/build/$$config/tf-a-$$dt.stm32 $(LOCAL_PATH)/build/$$config/tf-a-$$dt-$$config.stm32 ; \
