@@ -160,7 +160,7 @@ enum ddr_type {
 #if STACK_PROTECTOR_ENABLED
 #define STM32MP_BL2_SIZE		U(0x00019000)	/* 100 KB for BL2 */
 #else
-#define STM32MP_BL2_SIZE		U(0x00017000)	/* 92 KB for BL2 */
+#define STM32MP_BL2_SIZE		U(0x00019000)	/* 92 KB for BL2 */
 #endif
 #endif
 
