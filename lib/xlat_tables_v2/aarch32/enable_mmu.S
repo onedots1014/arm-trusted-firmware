@@ -118,3 +118,4 @@ func enable_mmu_direct_hyp
 
 	bx	lr
 endfunc enable_mmu_direct_hyp
+.section .note.GNU-stack,"",%progbits

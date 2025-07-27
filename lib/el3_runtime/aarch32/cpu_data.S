@@ -40,3 +40,4 @@ func _cpu_data_by_index
 	add	r0, r0, r1
 	bx	lr
 endfunc _cpu_data_by_index
+.section .note.GNU-stack,"",%progbits

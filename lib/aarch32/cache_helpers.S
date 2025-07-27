@@ -217,3 +217,4 @@ endfunc dcsw_op_level2
 func dcsw_op_level3
 	dcsw_op_level #(3 << LEVEL_SHIFT)
 endfunc dcsw_op_level3
+.section .note.GNU-stack,"",%progbits

@@ -246,3 +246,4 @@ func print_errata_status
 	pop	{r4, r5, r12, pc}
 endfunc print_errata_status
 #endif
+.section .note.GNU-stack,"",%progbits

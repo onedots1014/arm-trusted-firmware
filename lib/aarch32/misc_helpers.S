@@ -188,3 +188,4 @@ func disable_mmu_icache_secure
 	ldr	r1, =(SCTLR_M_BIT | SCTLR_C_BIT | SCTLR_I_BIT)
 	b	do_disable_mmu
 endfunc disable_mmu_icache_secure
+.section .note.GNU-stack,"",%progbits

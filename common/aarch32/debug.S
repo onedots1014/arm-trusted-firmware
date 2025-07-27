@@ -232,3 +232,4 @@ func asm_print_hex
 	bne	1b
 	bx	r7
 endfunc asm_print_hex
+.section .note.GNU-stack,"",%progbits

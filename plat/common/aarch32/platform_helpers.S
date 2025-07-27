@@ -101,3 +101,4 @@ endfunc bl1_plat_prepare_exit
 func plat_panic_handler
 	b	plat_panic_handler
 endfunc plat_panic_handler
+.section .note.GNU-stack,"",%progbits

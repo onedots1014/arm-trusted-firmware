@@ -41,3 +41,4 @@ func spin_unlock
 	COND_SEV()
 	bx	lr
 endfunc spin_unlock
+.section .note.GNU-stack,"",%progbits

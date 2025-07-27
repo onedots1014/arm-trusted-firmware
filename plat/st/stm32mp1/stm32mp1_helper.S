@@ -382,3 +382,4 @@ func wfi_svc_int_enable
 	pop	{r4,r8,lr}
 	bx	lr
 endfunc wfi_svc_int_enable
+.section .note.GNU-stack,"",%progbits

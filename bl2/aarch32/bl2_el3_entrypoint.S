@@ -89,3 +89,4 @@ func bl2_run_next_image
 	ldm	r8, {r0, r1, r2, r3}
 	eret
 endfunc bl2_run_next_image
+.section .note.GNU-stack,"",%progbits

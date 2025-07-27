@@ -146,3 +146,4 @@ func psci_power_down_wfi
 	wfi
 	no_ret	plat_panic_handler
 endfunc psci_power_down_wfi
+.section .note.GNU-stack,"",%progbits

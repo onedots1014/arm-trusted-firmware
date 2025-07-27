@@ -82,3 +82,4 @@ declare_cpu_ops cortex_a7, CORTEX_A7_MIDR, \
 	cortex_a7_reset_func, \
 	cortex_a7_core_pwr_dwn, \
 	cortex_a7_cluster_pwr_dwn
+.section .note.GNU-stack,"",%progbits
