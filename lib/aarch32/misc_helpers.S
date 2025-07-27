@@ -313,3 +313,4 @@ func fixup_gdt_reloc
 	blo	1b
 	bx	lr
 endfunc fixup_gdt_reloc
+.section .note.GNU-stack,"",%progbits

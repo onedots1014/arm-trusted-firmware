@@ -147,3 +147,4 @@ func psci_power_down_wfi
 	wfi
 	b	1b
 endfunc psci_power_down_wfi
+.section .note.GNU-stack,"",%progbits

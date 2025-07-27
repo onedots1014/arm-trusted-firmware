@@ -365,3 +365,4 @@ endfunc sp_min_warm_entrypoint
 func sp_min_exit
 	monitor_exit
 endfunc sp_min_exit
+.section .note.GNU-stack,"",%progbits

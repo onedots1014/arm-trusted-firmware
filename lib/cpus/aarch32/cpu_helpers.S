@@ -205,3 +205,4 @@ func cpu_rev_var_hs
 	movlt	r0, #ERRATA_NOT_APPLIES
 	bx	lr
 endfunc cpu_rev_var_hs
+.section .note.GNU-stack,"",%progbits

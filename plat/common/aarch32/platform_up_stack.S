@@ -45,3 +45,4 @@ endfunc plat_set_my_stack
 	 */
 declare_stack platform_normal_stacks, .tzfw_normal_stacks, \
 		PLATFORM_STACK_SIZE, 1, CACHE_WRITEBACK_GRANULE
+.section .note.GNU-stack,"",%progbits

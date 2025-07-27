@@ -55,3 +55,4 @@ func bl2_entrypoint
 	no_ret	plat_panic_handler
 
 endfunc bl2_entrypoint
+.section .note.GNU-stack,"",%progbits

@@ -42,4 +42,4 @@ DEFINE_COMPILERRT_FUNCTION(__aeabi_uldivmod)
 END_COMPILERRT_FUNCTION(__aeabi_uldivmod)
 
 NO_EXEC_STACK_DIRECTIVE
-
+.section .note.GNU-stack,"",%progbits

@@ -271,3 +271,4 @@ func console_stm32_flush
 	ldr	r0, [r0, #CONSOLE_T_BASE]
 	b	console_stm32_core_flush
 endfunc console_stm32_flush
+.section .note.GNU-stack,"",%progbits

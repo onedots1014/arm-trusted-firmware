@@ -334,3 +334,4 @@ ifar_str:
 end_error_str:
 	.asciz "\n\r"
 #endif
+.section .note.GNU-stack,"",%progbits

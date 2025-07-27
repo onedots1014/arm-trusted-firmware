@@ -19,3 +19,4 @@ vector_base bl2_vector_table
 	b	report_exception	/* Reserved */
 	b	report_exception	/* IRQ */
 	b	report_exception	/* FIQ */
+.section .note.GNU-stack,"",%progbits

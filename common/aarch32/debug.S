@@ -237,3 +237,4 @@ func report_data_abort
 	no_ret	plat_panic_handler
 #endif
 endfunc report_data_abort
+.section .note.GNU-stack,"",%progbits
