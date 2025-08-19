@@ -1,0 +1,69 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * STM32MP15 interrupt controller fixes
+ * Adds missing #address-cells properties to interrupt providers
+ */
+
+&intc {
+	#address-cells = <0>;
+};
+
+&pwr_irq {
+	#address-cells = <0>;
+};
+
+&exti {
+	#address-cells = <0>;
+};
+
+&exti_pwr {
+	#address-cells = <0>;
+};
+
+&gpioa {
+	#address-cells = <0>;
+};
+
+&gpiob {
+	#address-cells = <0>;
+};
+
+&gpioc {
+	#address-cells = <0>;
+};
+
+&gpiod {
+	#address-cells = <0>;
+};
+
+&gpioe {
+	#address-cells = <0>;
+};
+
+&gpiof {
+	#address-cells = <0>;
+};
+
+&gpiog {
+	#address-cells = <0>;
+};
+
+&gpioh {
+	#address-cells = <0>;
+};
+
+&gpioi {
+	#address-cells = <0>;
+};
+
+&gpioj {
+	#address-cells = <0>;
+};
+
+&gpiok {
+	#address-cells = <0>;
+};
+
+&gpioz {
+	#address-cells = <0>;
+};

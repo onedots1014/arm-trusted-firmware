@@ -9,6 +9,7 @@
 #include "stm32mp15xxac-pinctrl.dtsi"
 #include <dt-bindings/soc/st,stm32-etzpc.h>
 #include "onedots_stm32mp15xx.dtsi"
+#include "stm32mp15-interrupt-fix.dtsi"
 
 / {
 	model = "OneDots STM32MP157-512D PRO V1 Board";

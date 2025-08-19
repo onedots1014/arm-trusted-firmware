@@ -21,7 +21,7 @@
 		regulator-max-microvolt = <5000000>;
 		regulator-always-on;
 	};
-	vdd_usb: fixedregulator@3 {
+	vdd_usb: vdd_usb {
          	compatible = "regulator-fixed";
          	regulator-name = "vdd_usb";
          	regulator-min-microvolt = <3300000>;
@@ -70,6 +70,7 @@
 		interrupts-extended = <&exti_pwr 55 IRQ_TYPE_EDGE_FALLING>;
 		interrupt-controller;
 		#interrupt-cells = <2>;
+		#address-cells = <0>;
 		status = "okay";
 		secure-status = "okay";
 
@@ -212,20 +213,7 @@
 					regulator-off-in-suspend;
 				};
 			};
-/*
-			vdd_usb: ldo4 {
-				regulator-name = "vdd_usb";
-				regulator-min-microvolt = <3300000>;
-				regulator-max-microvolt = <3300000>;
-				regulator-always-on;
-				standby-ddr-sr {
-					regulator-on-in-suspend;
-				};
-				standby-ddr-off {
-					regulator-off-in-suspend;
-				};
-			};
-*/
+
 			vdda: ldo5 {
 				regulator-name = "vdda";
 				regulator-min-microvolt = <2900000>;
