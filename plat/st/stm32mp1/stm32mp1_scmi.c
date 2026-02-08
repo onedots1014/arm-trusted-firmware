@@ -16,6 +16,7 @@
 #include <dt-bindings/clock/stm32mp1-clks.h>
 #include <dt-bindings/reset/stm32mp1-resets.h>
 #include <lib/cassert.h>
+#include <lib/mmio.h>
 #include <lib/utils.h>
 
 #define TIMEOUT_US_1MS		1000U
@@ -128,6 +129,7 @@ static struct stm32_scmi_rd stm32_scmi0_reset_domain[] = {
 	RESET_CELL(RST_SCMI0_RNG1, RNG1_R, "rng1"),
 	RESET_CELL(RST_SCMI0_MDMA, MDMA_R, "mdma"),
 	RESET_CELL(RST_SCMI0_MCU, MCU_R, "mcu"),
+	RESET_CELL(RST_SCMI0_MCU_HOLD_BOOT, MCU_HOLD_BOOT_R, "mcu_hold_boot"),
 };
 
 struct scmi_agent_resources {
@@ -479,7 +481,21 @@ int32_t plat_scmi_rd_set_state(unsigned int agent_id, unsigned int scmi_id,
 		return SCMI_DENIED;
 	}
 
-	if (assert_not_deassert) {
+	if (rd->reset_id == MCU_HOLD_BOOT_R) {
+		/*
+		 * RCC_MP_GCR is a regular R/W register, not a SET/CLEAR pair.
+		 * Use read-modify-write instead of the generic reset driver.
+		 */
+		uintptr_t gcr_addr = stm32mp_rcc_base() + RCC_MP_GCR;
+
+		if (assert_not_deassert) {
+			VERBOSE("SCMI hold boot assert (MCU_BOOT=0)\n");
+			mmio_clrbits_32(gcr_addr, RCC_MP_GCR_BOOT_MCU);
+		} else {
+			VERBOSE("SCMI hold boot deassert (MCU_BOOT=1)\n");
+			mmio_setbits_32(gcr_addr, RCC_MP_GCR_BOOT_MCU);
+		}
+	} else if (assert_not_deassert) {
 		VERBOSE("SCMI reset %lu set\n", rd->reset_id);
 		stm32mp_reset_set(rd->reset_id);
 	} else {
