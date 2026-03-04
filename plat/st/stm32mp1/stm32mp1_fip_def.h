@@ -49,8 +49,8 @@
 #endif
 #endif /* STM32MP13 */
 #if STM32MP15
-#define STM32MP_BL2_RO_SIZE		U(0x00011000)	/* 68 KB */
-#define STM32MP_BL2_SIZE		U(0x00016000)	/* 88 KB for BL2 */
+#define STM32MP_BL2_RO_SIZE		U(0x00014000)	/* 80 KB */
+#define STM32MP_BL2_SIZE		U(0x0001B000)	/* 108 KB for BL2 */
 #endif /* STM32MP15 */
 #endif /* TRUSTED_BOARD_BOOT && !STM32MP_USE_EXTERNAL_HEAP */
 
