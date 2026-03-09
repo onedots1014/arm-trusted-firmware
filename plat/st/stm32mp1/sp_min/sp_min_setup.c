@@ -26,6 +26,8 @@
 #include <lib/xlat_tables/xlat_tables_v2.h>
 #include <plat/common/platform.h>
 
+#include <stm32mp_common.h>
+
 #include <platform_def.h>
 
 /******************************************************************************
@@ -167,6 +169,8 @@ void sp_min_early_platform_setup2(u_register_t arg0, u_register_t arg1,
 	if (stm32mp1_clk_probe() < 0) {
 		panic();
 	}
+
+	stm32_tamp_nvram_init();
 
 	(void)stm32mp_uart_console_setup();
 
