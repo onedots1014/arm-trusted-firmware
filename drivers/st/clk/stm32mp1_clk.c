@@ -1642,8 +1642,16 @@ static void stm32mp1_hse_enable(bool bypass, bool digbyp, bool css)
 		mmio_write_32(rcc_base + RCC_OCENSETR, RCC_OCENR_DIGBYP);
 	}
 
-	if (bypass || digbyp) {
+	if (bypass) {
+		/* Analog bypass: external analog clock signal, HSEBYP must be set */
 		mmio_write_32(rcc_base + RCC_OCENSETR, RCC_OCENR_HSEBYP);
+	} else if (digbyp) {
+		/*
+		 * Digital bypass: per RM0436, DIGBYP and HSEBYP must not both be set.
+		 * Explicitly clear HSEBYP so only DIGBYP is active, otherwise HSERDY
+		 * never asserts and clock initialization hangs.
+		 */
+		mmio_write_32(rcc_base + RCC_OCENCLRR, RCC_OCENR_HSEBYP);
 	}
 
 	stm32mp1_hs_ocs_set(true, RCC_OCENR_HSEON);
