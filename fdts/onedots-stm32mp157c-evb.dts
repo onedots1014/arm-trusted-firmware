@@ -1,0 +1,27 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) 2019-2023, STMicroelectronics - All Rights Reserved
+ * Author: Alexandre Torgue <alexandre.torgue@st.com> for STMicroelectronics.
+ */
+
+/dts-v1/;
+
+#include "stm32mp157.dtsi"
+#include "stm32mp15xa.dtsi"
+#include  "onedots-stm32mp157c-evb-pinctrl.dtsi"
+#include "stm32mp15xxac-pinctrl.dtsi"
+#include "onedots-stm32mp157c-evb.dtsi"
+
+/ {
+	model = "Belong STM32MP157AAC Evb Board";
+	compatible = "st,stm32mp157aac-evb", "st,stm32mp157";
+
+	aliases {
+		serial3 = &usart2;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+};
+
