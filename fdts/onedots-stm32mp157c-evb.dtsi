@@ -5,7 +5,8 @@
  */
 
 #include <dt-bindings/clock/stm32mp1-clksrc.h>
-#include "stm32mp15-ddr3-1x4Gb-1066-binG.dtsi"
+#include <dt-bindings/power/stm32mp1-power.h>
+#include "onedots_stm32mp15-ddr3-2x2Gb-1066-binG.dtsi"
 
 / {
 	aliases {
@@ -26,4 +27,123 @@
 		regulator-max-microvolt = <5000000>;
 		regulator-always-on;
 	};
+};
+
+&clk_hse {
+	st,digbypass;
+};
+
+&rcc {
+	compatible = "st,stm32mp1-rcc-secure", "st,stm32mp1-rcc", "syscon";
+	st,clksrc = <
+		CLK_MPU_PLL1P
+		CLK_AXI_PLL2P
+		CLK_MCU_PLL3P
+		CLK_CKPER_HSE
+		CLK_SDMMC12_PLL4P
+		CLK_STGEN_HSE
+		CLK_I2C46_HSI
+		CLK_UART24_HSI
+		CLK_USBPHY_HSE
+		CLK_USBO_USBPHY
+	>;
+
+	st,clkdiv = <
+		DIV(DIV_MPU, 1)
+		DIV(DIV_AXI, 0)
+		DIV(DIV_MCU, 0)
+		DIV(DIV_APB1, 1)
+		DIV(DIV_APB2, 1)
+		DIV(DIV_APB3, 1)
+		DIV(DIV_APB4, 1)
+		DIV(DIV_APB5, 2)
+	>;
+
+	st,pll_vco {
+		pll2_vco_1066Mhz: pll2-vco-1066Mhz {
+			src = <CLK_PLL12_HSE>;
+			divmn = <2 65>;
+			frac = <0x1400>;
+		};
+
+		pll3_vco_417Mhz: pll3-vco-417Mhz {
+			src = <CLK_PLL3_HSE>;
+			divmn = <1 33>;
+			frac = <0x1a04>;
+		};
+
+		pll4_vco_750Mhz: pll4-vco-750Mhz {
+			src = <CLK_PLL4_HSE>;
+			divmn = <3 124>;
+		};
+	};
+
+	/* VCO = 1066.0 MHz => P = 266 (AXI), Q = 533 (GPU), R = 533 (DDR) */
+	pll2: st,pll@1 {
+		compatible = "st,stm32mp1-pll";
+		reg = <1>;
+		st,pll = <&pll2_cfg1>;
+		pll2_cfg1: pll2_cfg1 {
+			st,pll_vco = <&pll2_vco_1066Mhz>;
+			st,pll_div_pqr = <1 0 0>;
+		};
+	};
+
+	/* VCO = 417.8 MHz => P = 209, Q = 24, R = 11 */
+	pll3: st,pll@2 {
+		compatible = "st,stm32mp1-pll";
+		reg = <2>;
+		st,pll = <&pll3_cfg1>;
+		pll3_cfg1: pll3_cfg1 {
+			st,pll_vco = <&pll3_vco_417Mhz>;
+			st,pll_div_pqr = <1 16 36>;
+		};
+	};
+
+	/* VCO = 750.0 MHz => P = 125, Q = 62.5, R = 62.5 */
+	pll4: st,pll@3 {
+		compatible = "st,stm32mp1-pll";
+		reg = <3>;
+		st,pll = <&pll4_cfg1>;
+		pll4_cfg1: pll4_cfg1 {
+			st,pll_vco = <&pll4_vco_750Mhz>;
+			st,pll_div_pqr = <5 11 11>;
+		};
+	};
+};
+
+&bsec {
+	board_id: board_id@ec {
+		reg = <0xec 0x4>;
+		st,non-secure-otp;
+	};
+};
+
+&uart4 {
+     pinctrl-names = "default";
+     pinctrl-0 = <&uart4_pins_a>;
+     status = "okay";
+};
+
+&sdmmc1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&sdmmc1_b4_pins_a>;
+	disable-wp;
+	st,neg-edge;
+	bus-width = <4>;
+	// vmmc-supply = <&v3v3>;
+	status = "okay";
+};
+&sdmmc2 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&sdmmc2_b4_pins_a &sdmmc2_d47_pins_a>;
+        non-removable;
+        no-sd;
+        no-sdio;
+        st,neg-edge;
+        bus-width = <8>;
+       // vmmc-supply = <&v3v3>;
+        // vqmmc-supply = <&v3v3>;
+        mmc-ddr-3_3v;
+        status = "okay";
 };
