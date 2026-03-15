@@ -25,7 +25,7 @@
 #include <lib/mmio.h>
 #include <lib/xlat_tables/xlat_tables_v2.h>
 #include <plat/common/platform.h>
-
+#include <stm32mp_common.h>
 #include <platform_def.h>
 
 /******************************************************************************
@@ -167,7 +167,16 @@ void sp_min_early_platform_setup2(u_register_t arg0, u_register_t arg1,
 	if (stm32mp1_clk_probe() < 0) {
 		panic();
 	}
-
+	/*
+	 * Initialize the TAMP backup register nvmem driver for SP_MIN's own
+	 * context. BL2 and SP_MIN are separate firmware images with independent
+	 * BSS sections, so the nvmem_dev_array[] registered by BL2 is not
+	 * visible here. Without this call, nvmem_cell_write() in
+	 * stm32_pwr_domain_on() would dereference a NULL cell->dev when Linux
+	 * issues a PSCI CPU_ON SMC to wake Core 1, causing a data abort in
+	 * Monitor mode ("Exception mode=0x16 at: 0xffffffed").
+	 */
+	stm32_tamp_nvram_init();
 	(void)stm32mp_uart_console_setup();
 
 	stm32mp1_etzpc_early_setup();
