@@ -63,6 +63,7 @@ static int stm32_pwr_domain_on(u_register_t mpidr)
 	unsigned long current_cpu_mpidr = read_mpidr_el1();
 	struct nvmem_cell magic_number;
 	struct nvmem_cell branch_address;
+	uint32_t core1_magic = BOOT_API_A7_CORE1_MAGIC_NUMBER;
 	int ret = 0;
 
 	ret = stm32_get_magic_number_cell(&magic_number);
@@ -92,8 +93,8 @@ static int stm32_pwr_domain_on(u_register_t mpidr)
 			 sizeof(stm32_sec_entrypoint));
 
 	/* Write magic number in backup register */
-	nvmem_cell_write(&magic_number, (uint8_t *)&stm32_sec_entrypoint,
-			 sizeof(stm32_sec_entrypoint));
+	nvmem_cell_write(&magic_number, (uint8_t *)&core1_magic,
+			 sizeof(core1_magic));
 
 	clk_disable(RTCAPB);
 
