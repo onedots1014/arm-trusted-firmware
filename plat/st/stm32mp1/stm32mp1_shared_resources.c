@@ -395,6 +395,19 @@ bool stm32mp_nsec_can_access_clock(unsigned long clock_id)
 	case PLL3_R:
 	case RTCAPB:
 		return true;
+	case GPIOA:
+	case GPIOB:
+	case GPIOC:
+	case GPIOD:
+	case GPIOE:
+	case GPIOF:
+	case GPIOG:
+	case GPIOH:
+	case GPIOI:
+	case GPIOJ:
+	case GPIOK:
+		/* Only GPIOZ pins can be made secure on STM32MP15 */
+		return true;
 	case GPIOZ:
 		/* Allow clock access if at least one pin is non-secure */
 		return !stm32mp_gpio_bank_is_secure(GPIO_BANK_Z);

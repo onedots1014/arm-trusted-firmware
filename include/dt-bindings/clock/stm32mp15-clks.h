@@ -270,6 +270,17 @@
 #define CK_SCMI0_RTCAPB		18
 #define CK_SCMI0_SPI6		19
 #define CK_SCMI0_USART1		20
+#define CK_SCMI0_GPIOA		21
+#define CK_SCMI0_GPIOB		22
+#define CK_SCMI0_GPIOC		23
+#define CK_SCMI0_GPIOD		24
+#define CK_SCMI0_GPIOE		25
+#define CK_SCMI0_GPIOF		26
+#define CK_SCMI0_GPIOG		27
+#define CK_SCMI0_GPIOH		28
+#define CK_SCMI0_GPIOI		29
+#define CK_SCMI0_GPIOJ		30
+#define CK_SCMI0_GPIOK		31
 
 #define CK_SCMI1_PLL3_Q		0
 #define CK_SCMI1_PLL3_R		1

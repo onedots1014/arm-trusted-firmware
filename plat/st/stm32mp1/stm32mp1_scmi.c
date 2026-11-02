@@ -100,6 +100,17 @@ static struct stm32_scmi_clk stm32_scmi0_clock[] = {
 	CLOCK_CELL(CK_SCMI0_RTCAPB, RTCAPB, "rtcapb", true),
 	CLOCK_CELL(CK_SCMI0_SPI6, SPI6_K, "spi6_k", false),
 	CLOCK_CELL(CK_SCMI0_USART1, USART1_K, "usart1_k", false),
+	CLOCK_CELL(CK_SCMI0_GPIOA, GPIOA, "gpioa", false),
+	CLOCK_CELL(CK_SCMI0_GPIOB, GPIOB, "gpiob", false),
+	CLOCK_CELL(CK_SCMI0_GPIOC, GPIOC, "gpioc", false),
+	CLOCK_CELL(CK_SCMI0_GPIOD, GPIOD, "gpiod", false),
+	CLOCK_CELL(CK_SCMI0_GPIOE, GPIOE, "gpioe", false),
+	CLOCK_CELL(CK_SCMI0_GPIOF, GPIOF, "gpiof", false),
+	CLOCK_CELL(CK_SCMI0_GPIOG, GPIOG, "gpiog", false),
+	CLOCK_CELL(CK_SCMI0_GPIOH, GPIOH, "gpioh", false),
+	CLOCK_CELL(CK_SCMI0_GPIOI, GPIOI, "gpioi", false),
+	CLOCK_CELL(CK_SCMI0_GPIOJ, GPIOJ, "gpioj", false),
+	CLOCK_CELL(CK_SCMI0_GPIOK, GPIOK, "gpiok", false),
 };
 
 static struct stm32_scmi_clk stm32_scmi1_clock[] = {
