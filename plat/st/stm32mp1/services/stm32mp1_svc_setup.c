@@ -17,6 +17,7 @@
 #include <stm32mp1_smc.h>
 
 #include "bsec_svc.h"
+#include "pm_domain_svc.h"
 #include "pwr_svc.h"
 
 /*
@@ -41,6 +42,10 @@ void plat_svc_smc_handler(uint32_t smc_fid, u_register_t x1,
 	case STM32_SIP_SVC_CALL_COUNT:
 		*ret1 = STM32_COMMON_SIP_NUM_CALLS;
 		break;
+	case STM32_SMC_PD_DOMAIN:
+		*ret1 = pm_domain_scv_handler(x1, x2);
+		break;
+
 	case STM32_SMC_PWR:
 		*ret1 = pwr_scv_handler(x1, x2, x3);
 		break;

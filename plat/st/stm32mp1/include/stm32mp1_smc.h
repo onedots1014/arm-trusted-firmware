@@ -33,6 +33,19 @@
 #define STM32_SMC_PWR			0x82001001
 
 /*
+ * STM32_SMC_PD_DOMAIN call API
+ *
+ * Argument a0: (input) SMCC ID
+ *		(output) status return code
+ * Argument a1: (input) power domain ID (0: VSW, 1: CORE_RET, 2: CORE)
+ * Argument a2: (input) 0 to switch the domain on, 1 to switch it off
+ *
+ * Issued by Linux's stm32-pm-domain driver whenever a device of the CORE
+ * domain is runtime-resumed or suspended.
+ */
+#define STM32_SMC_PD_DOMAIN		0x82001008
+
+/*
  * STM32_SMC_BSEC call API
  *
  * Argument a0: (input) SMCC ID
@@ -55,7 +68,7 @@
 #define STM32_SIP_SMC_SCMI_AGENT1	0x82002001
 
 /* Number of STM32 SiP Calls implemented */
-#define STM32_COMMON_SIP_NUM_CALLS	4
+#define STM32_COMMON_SIP_NUM_CALLS	5
 
 /* Service ID for STM32_SMC_PWR */
 #define STM32_SMC_REG_READ		0x0
