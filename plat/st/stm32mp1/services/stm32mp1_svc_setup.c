@@ -17,6 +17,7 @@
 #include <stm32mp1_smc.h>
 
 #include "bsec_svc.h"
+#include "pwr_svc.h"
 
 /*
  * Platform-level Standard Service SIP SMC setup.
@@ -40,6 +41,10 @@ void plat_svc_smc_handler(uint32_t smc_fid, u_register_t x1,
 	case STM32_SIP_SVC_CALL_COUNT:
 		*ret1 = STM32_COMMON_SIP_NUM_CALLS;
 		break;
+	case STM32_SMC_PWR:
+		*ret1 = pwr_scv_handler(x1, x2, x3);
+		break;
+
 	case STM32_SMC_BSEC:
 		*ret1 = bsec_main(x1, x2, x3, ret2);
 		*ret2_enabled = true;

@@ -18,6 +18,21 @@
 /* Secure Service access from Non-secure */
 
 /*
+ * STM32_SMC_PWR call API
+ *
+ * Argument a0: (input) SMCC ID
+ *		(output) status return code
+ * Argument a1: (input) Service ID (STM32_SMC_REG_xxx)
+ * Argument a2: (input) PWR register offset or physical address
+ * Argument a3: (input) register value or bits to set / clear
+ *
+ * Only the bits a non-secure client needs are accessible: the USB and
+ * 1.1 V / 1.8 V regulator enables and VBAT charging in PWR_CR3, and the
+ * wake-up configuration in PWR_WKUPCR / PWR_MPUWKUPENR.
+ */
+#define STM32_SMC_PWR			0x82001001
+
+/*
  * STM32_SMC_BSEC call API
  *
  * Argument a0: (input) SMCC ID
@@ -40,7 +55,13 @@
 #define STM32_SIP_SMC_SCMI_AGENT1	0x82002001
 
 /* Number of STM32 SiP Calls implemented */
-#define STM32_COMMON_SIP_NUM_CALLS	3
+#define STM32_COMMON_SIP_NUM_CALLS	4
+
+/* Service ID for STM32_SMC_PWR */
+#define STM32_SMC_REG_READ		0x0
+#define STM32_SMC_REG_WRITE		0x1
+#define STM32_SMC_REG_SET		0x2
+#define STM32_SMC_REG_CLEAR		0x3
 
 /* Service for BSEC */
 #define STM32_SMC_READ_SHADOW		0x01
