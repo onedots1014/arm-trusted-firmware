@@ -259,13 +259,31 @@ size_t plat_scmi_clock_count(unsigned int agent_id)
 	return resource->clock_count;
 }
 
+/*
+ * The MPU and AXI clocks run the CPU and the interconnect and must never be
+ * gated, but non-secure agents need to see them: Linux cpufreq-dt reads the
+ * CPU rate through SCMI (CK_SCMI0_MPU), and RCC children of ck_axi (MDMA,
+ * ...) enable their parent through SCMI. Expose them read-only and treat
+ * enable/disable requests as successful no-ops.
+ */
+static bool is_nsec_always_on_clock(unsigned long clock_id)
+{
+	return (clock_id == CK_MPU) || (clock_id == CK_AXI);
+}
+
+static bool nsec_can_read_clock(unsigned long clock_id)
+{
+	return stm32mp_nsec_can_access_clock(clock_id) ||
+	       is_nsec_always_on_clock(clock_id);
+}
+
 const char *plat_scmi_clock_get_name(unsigned int agent_id,
 				     unsigned int scmi_id)
 {
 	struct stm32_scmi_clk *clock = find_clock(agent_id, scmi_id);
 
 	if ((clock == NULL) ||
-	    !stm32mp_nsec_can_access_clock(clock->clock_id)) {
+	    !nsec_can_read_clock(clock->clock_id)) {
 		return NULL;
 	}
 
@@ -282,7 +300,7 @@ int32_t plat_scmi_clock_rates_array(unsigned int agent_id, unsigned int scmi_id,
 		return SCMI_NOT_FOUND;
 	}
 
-	if (!stm32mp_nsec_can_access_clock(clock->clock_id)) {
+	if (!nsec_can_read_clock(clock->clock_id)) {
 		return SCMI_DENIED;
 	}
 
@@ -307,7 +325,7 @@ unsigned long plat_scmi_clock_get_rate(unsigned int agent_id,
 	struct stm32_scmi_clk *clock = find_clock(agent_id, scmi_id);
 
 	if ((clock == NULL) ||
-	    !stm32mp_nsec_can_access_clock(clock->clock_id)) {
+	    !nsec_can_read_clock(clock->clock_id)) {
 		return 0U;
 	}
 
@@ -319,7 +337,7 @@ int32_t plat_scmi_clock_get_state(unsigned int agent_id, unsigned int scmi_id)
 	struct stm32_scmi_clk *clock = find_clock(agent_id, scmi_id);
 
 	if ((clock == NULL) ||
-	    !stm32mp_nsec_can_access_clock(clock->clock_id)) {
+	    !nsec_can_read_clock(clock->clock_id)) {
 		return 0U;
 	}
 
@@ -333,6 +351,10 @@ int32_t plat_scmi_clock_set_state(unsigned int agent_id, unsigned int scmi_id,
 
 	if (clock == NULL) {
 		return SCMI_NOT_FOUND;
+	}
+
+	if (is_nsec_always_on_clock(clock->clock_id)) {
+		return SCMI_SUCCESS;
 	}
 
 	if (!stm32mp_nsec_can_access_clock(clock->clock_id)) {
